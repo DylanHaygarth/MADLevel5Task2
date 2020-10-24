@@ -44,6 +44,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etGameTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tilgametitle_text" />
@@ -58,6 +59,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tilGameTitle">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPlatform"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tilplatform_text" />
@@ -72,6 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tilPlatform">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDay"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tilday_text" />
@@ -86,6 +89,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tilPlatform">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etMonth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tilmonth_text" />
@@ -100,6 +104,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tilPlatform">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etYear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/tilyear_text" />
