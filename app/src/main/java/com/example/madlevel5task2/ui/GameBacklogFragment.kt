@@ -1,7 +1,10 @@
 package com.example.madlevel5task2.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -28,9 +31,20 @@ class GameBacklogFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_game_backlog, container, false)
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.btnDelete -> {
+                viewModel.deleteAllGames() // deletes all game from backlog when button is pressed
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setHasOptionsMenu(true)
         initViews()
         observeAddGamesResult()
     }

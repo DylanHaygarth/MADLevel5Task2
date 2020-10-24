@@ -21,9 +21,15 @@ class GameViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun deleteReminder(game: Game) {
+    fun deleteGame(game: Game) {
         ioScope.launch {
             gamesRepository.deleteGame(game)
+        }
+    }
+
+    fun deleteAllGames() {
+        ioScope.launch {
+            gamesRepository.deleteAllGames()
         }
     }
 }

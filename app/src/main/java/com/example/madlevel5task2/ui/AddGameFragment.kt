@@ -32,10 +32,6 @@ class AddGameFragment : Fragment() {
         initViews()
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun initViews() {
         fabSaveGame.setOnClickListener{
             onAddGame()
@@ -46,7 +42,7 @@ class AddGameFragment : Fragment() {
     private fun onAddGame() {
         val gameTitle = etGameTitle.text.toString()
         val gamePlatform = etPlatform.text.toString()
-        val releaseDate = Date(etYear.text.toString().toInt(), etMonth.text.toString().toInt(), etDay.text.toString().toInt())
+        val releaseDate = Date(etYear.text.toString().toInt() - 1900, etMonth.text.toString().toInt() - 1, etDay.text.toString().toInt())
 
         val game = Game(gameTitle, gamePlatform, releaseDate)
         viewModel.insertGame(game)

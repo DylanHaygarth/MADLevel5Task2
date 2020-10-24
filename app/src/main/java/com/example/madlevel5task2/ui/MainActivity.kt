@@ -44,9 +44,11 @@ class MainActivity : AppCompatActivity() {
             if (destination.id in arrayOf(R.id.addGameFragment)) {
                 supportActionBar?.title = "Add Game"
                 supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                menu.findItem(R.id.btnDelete).isVisible = false
             } else {
                 supportActionBar?.title = "Game Backlog"
                 supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                menu.findItem(R.id.btnDelete).isVisible = true
             }
         }
     }
