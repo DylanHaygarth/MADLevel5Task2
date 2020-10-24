@@ -69,6 +69,7 @@ class GameBacklogFragment : Fragment() {
                 games ->
             this@GameBacklogFragment.games.clear()
             this@GameBacklogFragment.games.addAll(games)
+            this@GameBacklogFragment.games.sortBy { game -> game.releaseDate } // sorts the games in ascending order (first to be released at top)
             this.gamesAdapter.notifyDataSetChanged()
         })
     }

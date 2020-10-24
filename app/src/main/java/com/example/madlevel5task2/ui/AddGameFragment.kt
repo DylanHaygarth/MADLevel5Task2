@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.madlevel5task2.R
 import com.example.madlevel5task2.model.Game
 import kotlinx.android.synthetic.main.fragment_add_game.*
@@ -40,11 +41,15 @@ class AddGameFragment : Fragment() {
 
     // adds a game to the database
     private fun onAddGame() {
+        // different fields making a game
         val gameTitle = etGameTitle.text.toString()
         val gamePlatform = etPlatform.text.toString()
         val releaseDate = Date(etYear.text.toString().toInt() - 1900, etMonth.text.toString().toInt() - 1, etDay.text.toString().toInt())
 
+        // adding game to the database
         val game = Game(gameTitle, gamePlatform, releaseDate)
         viewModel.insertGame(game)
+
+        findNavController().navigate(R.id.gameBacklogFragment) // return to game backlog
     }
 }
