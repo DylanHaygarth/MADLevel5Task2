@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.R
@@ -54,6 +55,9 @@ class GameBacklogFragment : Fragment() {
         rvGames.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         rvGames.adapter = gamesAdapter
 
+        // adds item touch helper to the recycler view
+        createItemTouchHelper().attachToRecyclerView(rvGames)
+
         fabAddGame.setOnClickListener{
             findNavController().navigate(R.id.addGameFragment)
         }
@@ -67,5 +71,27 @@ class GameBacklogFragment : Fragment() {
             this@GameBacklogFragment.games.addAll(games)
             this.gamesAdapter.notifyDataSetChanged()
         })
+    }
+
+    // when the user swipes a game to the left it will be deleted
+    private fun createItemTouchHelper(): ItemTouchHelper {
+        var callback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return true
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val position = viewHolder.adapterPosition
+                val gameToDelete = games[position]
+
+                viewModel.deleteGame(gameToDelete)
+            }
+        }
+
+        return ItemTouchHelper(callback)
     }
 }
