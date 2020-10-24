@@ -16,7 +16,7 @@ class GamesRepository(context: Context) {
     }
 
     fun getAllGames() : LiveData<List<Game>> {
-        return gameDao.getGames()
+        return gameDao.getAllGames()
     }
 
     suspend fun insertGame(game: Game) {
