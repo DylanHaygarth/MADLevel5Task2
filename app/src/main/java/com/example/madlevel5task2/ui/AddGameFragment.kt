@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -41,15 +42,42 @@ class AddGameFragment : Fragment() {
 
     // adds a game to the database
     private fun onAddGame() {
-        // different fields making a game
-        val gameTitle = etGameTitle.text.toString()
-        val gamePlatform = etPlatform.text.toString()
-        val releaseDate = Date(etYear.text.toString().toInt() - 1900, etMonth.text.toString().toInt() - 1, etDay.text.toString().toInt())
+        if (validate()) {
+            // different fields making a game
+            val gameTitle = etGameTitle.text.toString()
+            val gamePlatform = etPlatform.text.toString()
+            val releaseDate = Date(etYear.text.toString().toInt() - 1900, etMonth.text.toString().toInt() - 1, etDay.text.toString().toInt())
 
-        // adding game to the database
-        val game = Game(gameTitle, gamePlatform, releaseDate)
-        viewModel.insertGame(game)
+            // adding game to the database
+            val game = Game(gameTitle, gamePlatform, releaseDate)
+            viewModel.insertGame(game)
+            findNavController().navigate(R.id.gameBacklogFragment) // return to game backlog
+        }
+    }
 
-        findNavController().navigate(R.id.gameBacklogFragment) // return to game backlog
+    private fun validate() : Boolean{
+        var isTitleFilled = false
+        var isPlatformFilled = false
+        var isDateFilled = false
+
+        if (etGameTitle.text?.isNotEmpty()!!) {
+            isTitleFilled = true
+        } else {
+            tilGameTitle.error = "Please fill in a title"
+        }
+
+        if (etPlatform.text?.isNotEmpty()!!) {
+            isPlatformFilled = true
+        } else {
+            tilPlatform.error = "Please fill in a gaming platform"
+        }
+
+        if (etDay.text?.isNotEmpty()!! || etMonth.text?.isNotEmpty()!! || etYear.text?.isNotEmpty()!!) {
+            isDateFilled = true
+        } else {
+            Toast.makeText(context, "Please fill in a date", Toast.LENGTH_SHORT)
+        }
+
+        return false
     }
 }
