@@ -1,6 +1,8 @@
 package com.example.madlevel5task2.ui
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -34,7 +36,9 @@ class GameBacklogFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.btnDelete -> {
+                val tempGames = games.toList()
                 viewModel.deleteAllGames() // deletes all game from backlog when button is pressed
+                undoAllDelete(tempGames)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -89,17 +93,34 @@ class GameBacklogFragment : Fragment() {
                 val gameToDelete = games[position]
 
                 viewModel.deleteGame(gameToDelete)
-                undoMessage()
+                undoSingleDelete(gameToDelete)
             }
         }
 
         return ItemTouchHelper(callback)
     }
 
-    private fun undoMessage() {
-        val undoMessage = Snackbar.make(rvGames, "test", Snackbar.LENGTH_SHORT)
-        undoMessage.setAction("Undo", UndoListener())
+    // reverts the deletion of a game
+    private fun undoSingleDelete(game: Game) {
+        val undoMessage = Snackbar.make(rvGames, getString(R.string.deleted_game_message), Snackbar.LENGTH_SHORT)
+        var undoListener = View.OnClickListener {
+            viewModel.insertGame(game)
+        }
 
+        undoMessage.setAction(getString(R.string.undo_text), undoListener)
+        undoMessage.show()
+    }
+
+    // reverts the deletion of all games
+    private fun undoAllDelete(games: List<Game>) {
+        val undoMessage = Snackbar.make(rvGames, getString(R.string.deleted_backlog_message), Snackbar.LENGTH_SHORT)
+        var undoListener = View.OnClickListener {
+            for (i in games.indices) {
+                viewModel.insertGame(games[i])
+            }
+        }
+
+        undoMessage.setAction(getString(R.string.undo_text), undoListener)
         undoMessage.show()
     }
 }
