@@ -55,27 +55,38 @@ class AddGameFragment : Fragment() {
         }
     }
 
+    // checks if the field are properly filled in
     private fun validate() : Boolean{
         var isTitleFilled = false
         var isPlatformFilled = false
-        var isDateFilled = false
+        var isDateValid = false
 
+        // checks if title is filled in
         if (etGameTitle.text?.isNotEmpty()!!) {
             isTitleFilled = true
         } else {
-            tilGameTitle.error = "Please fill in a title"
+            tilGameTitle.error = getString(R.string.title_error)
         }
 
+        // checks if platform is filled in
         if (etPlatform.text?.isNotEmpty()!!) {
             isPlatformFilled = true
         } else {
-            tilPlatform.error = "Please fill in a gaming platform"
+            tilPlatform.error = getString(R.string.platform_error)
         }
 
-        if (etDay.text?.isNotEmpty()!! || etMonth.text?.isNotEmpty()!! || etYear.text?.isNotEmpty()!!) {
-            isDateFilled = true
+        // checks if date is filled in and if a valid day/month is given
+        if (etDay.text?.isEmpty()!! || etMonth.text?.isEmpty()!! || etYear.text?.isEmpty()!!) {
+            Toast.makeText(context, getString(R.string.date_error), Toast.LENGTH_SHORT).show()
+        } else if (etMonth.text.toString().toInt() <= 0 || etMonth.text.toString().toInt() >= 13 ||
+            etDay.text.toString().toInt() <= 0 || etDay.text.toString().toInt() >= 32) {
+            Toast.makeText(context, getString(R.string.invaliddate_error), Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(context, "Please fill in a date", Toast.LENGTH_SHORT)
+            isDateValid = true
+        }
+
+        if (isTitleFilled && isPlatformFilled && isDateValid) {
+            return true
         }
 
         return false

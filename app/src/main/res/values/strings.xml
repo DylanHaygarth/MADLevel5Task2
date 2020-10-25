@@ -15,4 +15,9 @@
     <string name="tilmonth_text">Month</string>
     <string name="tilday_text">Day</string>
     <string name="delete_text">Delete</string>
+
+    <string name="title_error">Please fill in a title</string>
+    <string name="platform_error">Please fill in a gaming platform</string>
+    <string name="date_error">Please fill in a date</string>
+    <string name="invaliddate_error">Please fill in a valid date</string>
 </resources>

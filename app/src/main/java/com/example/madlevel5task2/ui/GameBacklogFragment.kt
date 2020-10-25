@@ -1,8 +1,6 @@
 package com.example.madlevel5task2.ui
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.madlevel5task2.R
 import com.example.madlevel5task2.model.Game
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_game_backlog.*
 
 class GameBacklogFragment : Fragment() {
@@ -90,9 +89,17 @@ class GameBacklogFragment : Fragment() {
                 val gameToDelete = games[position]
 
                 viewModel.deleteGame(gameToDelete)
+                undoMessage()
             }
         }
 
         return ItemTouchHelper(callback)
+    }
+
+    private fun undoMessage() {
+        val undoMessage = Snackbar.make(rvGames, "test", Snackbar.LENGTH_SHORT)
+        undoMessage.setAction("Undo", UndoListener())
+
+        undoMessage.show()
     }
 }
